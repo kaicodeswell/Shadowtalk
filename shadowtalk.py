@@ -3,9 +3,18 @@ import threading
 import sys
 import os
 
-HOST = 'localhost'  # or use your local IP
-PORT = 5000
+# Automatically detect local IP for server
+def get_local_ip():
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        ip = s.getsockname()[0]
+        s.close()
+        return ip
+    except:
+        return '127.0.0.1'
 
+PORT = 5000
 username = ""
 
 # Function to receive messages
@@ -81,6 +90,9 @@ def start_server():
             print("\n👋 Bye!")
             return
 
+    HOST = get_local_ip()
+    print(f"📡 Your IP address is: {HOST}")
+
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.bind((HOST, PORT))
     server_socket.listen()
@@ -122,10 +134,11 @@ def join_server():
             print("\n👋 Bye!")
             return
 
+    host_ip = input("🔌 Enter the host IP address: ").strip()
     print("🔌 Attempting to connect... Type '/exit' anytime to cancel.")
     try:
         client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        client_socket.connect((HOST, PORT))
+        client_socket.connect((host_ip, PORT))
         print("✅ Connected to the host!")
 
         threading.Thread(target=receive_messages, args=(client_socket,)).start()
