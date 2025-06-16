@@ -23,7 +23,7 @@ def receive_messages(conn):
         try:
             msg = conn.recv(1024).decode("utf-8")
             if msg:
-                print(f"\n💬 {msg}\n📝 You: ", end="")
+                print(f"\n💬 {msg}")
             else:
                 break
         except:
