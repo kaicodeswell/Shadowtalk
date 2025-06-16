@@ -16,6 +16,7 @@ def get_local_ip():
 
 PORT = 5000
 username = ""
+print_lock = threading.Lock()
 
 # Function to receive messages
 def receive_messages(conn):
@@ -23,11 +24,14 @@ def receive_messages(conn):
         try:
             msg = conn.recv(1024).decode("utf-8")
             if msg:
-                print(f"\n💬 {msg}")
+                with print_lock:
+                    sys.stdout.write(f"\r\n💬 {msg}\n📝 You: ")
+                    sys.stdout.flush()
             else:
                 break
         except:
-            print("\n⚠️ Connection closed.")
+            with print_lock:
+                print("\n⚠️ Connection closed.")
             conn.close()
             break
 
@@ -106,7 +110,7 @@ def start_server():
     try:
         conn, addr = server_socket.accept()
         print(f"✅ Connected with {addr}!")
-        threading.Thread(target=receive_messages, args=(conn,)).start()
+        threading.Thread(target=receive_messages, args=(conn,), daemon=True).start()
         send_messages(conn)
     except KeyboardInterrupt:
         print("\n👋 Server shut down by user.")
@@ -145,7 +149,7 @@ def join_server():
         client_socket.connect((host_ip, PORT))
         print("✅ Connected to the host!")
 
-        threading.Thread(target=receive_messages, args=(client_socket,)).start()
+        threading.Thread(target=receive_messages, args=(client_socket,), daemon=True).start()
         send_messages(client_socket)
     except Exception as e:
         print(f"⚠️ Could not connect: {e}")
@@ -177,4 +181,3 @@ if __name__ == "__main__":
             break
         else:
             print("⚠️ Invalid option. Try again.")
-
