@@ -55,11 +55,11 @@ python shadowtalk.py
 # 📝 Available Commands
 Command	Action
 
-/exit	Exit the chat safely
+`/exit`	Exit the chat safely
 
-/clearhistory	Clear terminal chat history
+`/clearhistory`	Clear terminal chat history
 
-Ctrl+C	Also exits safely with message
+`Ctrl+C`	Also exits safely with message
 
 # 🙋‍♂️ Why ShadowTalk?
 ShadowTalk was made to learn basic networking with Python and create a practical tool to chat over local networks securely and simply — no server setup, no fluff.
