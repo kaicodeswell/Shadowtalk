@@ -31,7 +31,6 @@ def receive_messages(conn):
             conn.close()
             break
 
-
 # Function to send messages
 def send_messages(conn):
     while True:
@@ -178,3 +177,4 @@ if __name__ == "__main__":
             break
         else:
             print("⚠️ Invalid option. Try again.")
+
