@@ -31,6 +31,7 @@ def receive_messages(conn):
             conn.close()
             break
 
+
 # Function to send messages
 def send_messages(conn):
     while True:
