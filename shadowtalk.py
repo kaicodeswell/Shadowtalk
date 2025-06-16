@@ -25,7 +25,7 @@ def receive_messages(conn):
             msg = conn.recv(1024).decode("utf-8")
             if msg:
                 with print_lock:
-                    sys.stdout.write(f"\r\n💬 {msg}\n📝 You: ")
+                    sys.stdout.write(f"\r💬 {msg}\n📝 You: ")
                     sys.stdout.flush()
             else:
                 break
