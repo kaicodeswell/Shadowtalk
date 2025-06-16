@@ -35,12 +35,16 @@ def receive_messages(conn):
 def send_messages(conn):
     while True:
         try:
-            msg = input("📝 You: ")
+            msg = input("📝 You: ").strip()
         except KeyboardInterrupt:
             print("\n❌ Interrupted. Exiting...")
             conn.send(f"{username} left the chat.".encode("utf-8"))
             conn.close()
             sys.exit()
+
+        if not msg:
+            print("⚠️ Cannot send an empty message.")
+            continue
 
         if msg.lower() == "/exit":
             try:
